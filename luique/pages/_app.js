@@ -3,7 +3,8 @@ import { Fragment, useEffect, useState } from "react";
 import PreLoader from "../src/layouts/PreLoader";
 import "../styles/globals.css";
 import { Provider } from "react-redux";
-import store from "../store/store";
+import store from "../redux/store/store";
+import UserComponent from "../src/components/UserComponent";
 const App = ({ Component, pageProps }) => {
   const [loader, setLoader] = useState(true);
   useEffect(() => {
@@ -90,7 +91,9 @@ const App = ({ Component, pageProps }) => {
       </Head>
       {loader && <PreLoader />}
       <Component {...pageProps} />
+      <UserComponent/>
     </Fragment>
+    
     </Provider>
   );
 };
