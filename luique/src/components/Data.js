@@ -1,8 +1,12 @@
 import { useState, useEffect } from 'react';
+import Test from './Test';
+import index from '../../pages/index.jsx';
 
 const Data = () => {
-    const [data, setData] = useState([]);
-
+    const [data, setData] = useState({});
+    const [name, setName] = useState("");
+    const [title, setTitle] = useState("");
+    const [desc, setDesc] = useState("");
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -13,6 +17,13 @@ const Data = () => {
                 const jsonData = await response.json();
                 console.log(jsonData);
                 setData(jsonData);
+
+                setName(jsonData?.user?.about?.name ||"");
+                console.log("name",name)
+                setTitle(jsonData?.user?.about?.title ||"");
+                console.log(title)
+                setDesc(jsonData?.user?.about?.description ||"");
+                console.log(desc)
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -23,10 +34,17 @@ const Data = () => {
 
     return (
         <div>
-            <h1>Data:</h1>
-           <pre>{JSON.stringify(data,null,2)}</pre>
+            
+            <index name ={name}
+                title={title}
+                desc={desc}/>
+                
         </div>
     );
 };
 
 export default Data;
+// {/* <h1>Data:</h1>
+//             {name} */}
+//             <pre>{JSON.stringify(data, null, 2)}</pre>
+//             <Test name = {name}/>

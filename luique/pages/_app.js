@@ -3,6 +3,7 @@ import { Fragment, useEffect, useState } from "react";
 import PreLoader from "../src/layouts/PreLoader";
 import "../styles/globals.css";
 import Data from "../src/components/Data";
+import Test from "../src/components/Test";
 const App = ({ Component, pageProps }) => {
   const [loader, setLoader] = useState(true);
   useEffect(() => {
@@ -88,7 +89,8 @@ const App = ({ Component, pageProps }) => {
       </Head>
       {loader && <PreLoader />}
       <Component {...pageProps} />
-      <Data/>
+      {/* <Data/>
+      <Test/> */}
     </Fragment>
   );
 };

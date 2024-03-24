@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -14,6 +15,31 @@ const PortfolioIsotope = dynamic(
   }
 );
 const Index = () => {
+  const [data, setData] = useState({});
+    const [name, setName] = useState([]);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch("https://portfolio-backend-30mp.onrender.com/api/v1/get/user/65b3a22c01d900e96c4219ae");
+                if (!response.ok) {
+                    throw new Error('Failed to fetch data');
+                }
+                const jsonData = await response.json();
+                console.log(jsonData);
+                setData(jsonData);
+
+                const name = jsonData?.user?.about?.name || "";
+                const words = name.split(" ");
+                setName(words)
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+  
   return (
     <Layout pageClassName={"home"}>
       {/* Section - Hero Started */}
@@ -42,20 +68,18 @@ const Index = () => {
                     data-animate="active"
                   >
                     <span>
-                      <b>Zoé</b> Miller{" "}
+                    <b>{name[0]}</b>{name[1]}
                     </span>
                   </h1>
                   <div className="label lui-subtitle">
                     {" "}
-                    I am <strong>Web Developer</strong>
+                    I am {data?.user?.about?.title}
                   </div>
                 </div>
                 <div className="description">
                   <div>
                     <p>
-                      From France, Paris. I have rich experience in web design,
-                      also I am good at wordpress. I love to talk with you about
-                      our unique.
+                    {data?.user?.about?.description}
                     </p>
                   </div>
                   <div className="social-links">
@@ -90,8 +114,8 @@ const Index = () => {
               >
                 <img
                   decoding="async"
-                  src="assets/images/profile2.png"
-                  alt="<b>Zoé</b> Miller"
+                  src={data?.user?.about?.avatar?.url}
+                  alt={name}
                 />
                 <span className="circle circle-1" />
                 <span
@@ -116,14 +140,14 @@ const Index = () => {
                   <ul>
                     <li>
                       <span className="num">
-                        12 <strong>+</strong>
+                        {data?.user?.about?.exp_year} <strong>+</strong>
                       </span>
                       <span className="value">
                         Years of <strong>Experience</strong>
                       </span>
                     </li>
                     <li>
-                      <span className="num">330</span>
+                      <span className="num">{data?.user?.about?.some_total}</span>
                       <span className="value">
                         Completed <strong>Projects</strong>
                       </span>
@@ -133,7 +157,7 @@ const Index = () => {
               </div>
             </div>
             <div className="lui-bgtitle">
-              <span> Web Developer </span>
+              <span> <p>{data?.user?.about?.title}</p> </span>
             </div>
           </div>
         </div>
