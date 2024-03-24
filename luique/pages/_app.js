@@ -2,9 +2,7 @@ import Head from "next/head";
 import { Fragment, useEffect, useState } from "react";
 import PreLoader from "../src/layouts/PreLoader";
 import "../styles/globals.css";
-import { Provider } from "react-redux";
-import store from "../redux/store/store";
-import UserComponent from "../src/components/UserComponent";
+import Data from "../src/components/Data";
 const App = ({ Component, pageProps }) => {
   const [loader, setLoader] = useState(true);
   useEffect(() => {
@@ -14,7 +12,6 @@ const App = ({ Component, pageProps }) => {
   }, []);
 
   return (
-    <Provider store={store}>
     <Fragment>
       <Head>
         <title>Luique - Personal Portfolio React NextJS Template</title>
@@ -91,10 +88,8 @@ const App = ({ Component, pageProps }) => {
       </Head>
       {loader && <PreLoader />}
       <Component {...pageProps} />
-      <UserComponent/>
+      <Data/>
     </Fragment>
-    
-    </Provider>
   );
 };
 export default App;
